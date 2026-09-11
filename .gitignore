@@ -22,6 +22,43 @@ Thumbs.db
 tmp/
 scratch/
 
-# Large local archives (if any)
+# Large local archives and internal scratchpads
 *.zip
 PlotNeuralNet/
+paper_assets_old/
+ISDS2026_SUBMISSION_CHECK.md
+Review_and_Submission/ISDS2026_SUBMISSION_CHECK.md
+check_submission.ps1
+shrink_assets.py
+
+# Unused exploratory plots in paper_assets
+paper_assets/fgss_modular_perfect_3d*.pdf
+paper_assets/fgss_real_images_master.pdf
+paper_assets/multi_style_grid.jpg
+paper_assets/cross_dataset_grid.jpg
+paper_assets/attack_grid.jpg
+paper_assets/fgss_master_fullpage.pdf
+paper_assets/fgss_master_unified_dashed.pdf
+paper_assets/fgss_compact_blocks.pdf
+paper_assets/ae_unet_plotneuralnet*
+paper_assets/unet_vit_plotneuralnet*
+paper_assets/fgss_pure_plotneuralnet_master.pdf
+paper_assets/fgss_plotneuralnet_master_dashed.pdf
+paper_assets/fgss_plotneuralnet_beauty.pdf
+paper_assets/fgss_unified*.pdf
+paper_assets/fgss_decoder.pdf
+paper_assets/fgss_encoder.pdf
+paper_assets/fgss_tokenizer.pdf
+paper_assets/fgss_architecture.pdf
+paper_assets/fgss_overall.pdf
+
+# Unrelated conference and draft variants
+KSE2026*
+FGSS_main*
+bob_refine.tex
+main.tex
+ISDS2026_FGSS.tex
+ISDS2026_FGSS.pdf
+Compiled_PDFs/ISDS2026_FGSS.pdf
+Compiled_PDFs/KSE2026_FGSS.pdf
+Compiled_PDFs/style_tranfer.pdf

@@ -20,7 +20,7 @@ Style-transfer steganography uses the naturally variable texture of stylised ima
 
 **FGSS** represents the original content using a compact $\mathbf{z} \in \mathbb{R}^{64\times32\times32}$ semantic token and an auxiliary thumbnail. It combines:
 1. **Target-calibrated capacity-ceiling loss ($\mathcal{L}_{\text{cap}}$):** A soft quadratic barrier activating above a PSNR-derived MSE threshold ($\approx 1.2 \times 10^{-4}$ for $39$\,dB).
-2. **Frequency-guided residual placement ($\mathcal{L}_{\text{freq}}$):** Shifts perturbation energy from sensitive low frequencies ($LL$ energy suppressed to $7.8\%$) to high-frequency textures ($>92\%$).
+2. **Frequency-guided residual placement ($\mathcal{L}_{\text{freq}}$):** Penalises smooth carrier perturbations in the low-frequency band ($\boldsymbol{\Delta}_{\text{LL}}$) and shifts perturbation energy into high-frequency texture bands ($\boldsymbol{\Delta}_{\text{HH}}$) where human visual sensitivity is lowest.
 3. **Oracle-guided reverse decoder ($\mathcal{L}_{\text{oracle}}$):** Cascaded token prior and U-Net refinement decoder supervised against ground-truth representations.
 4. **Serial-source consistency ($\mathcal{L}_{\text{ser}}$):** Enforces recovery across sequential multi-pass stylisations.
 
