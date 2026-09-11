@@ -22,6 +22,9 @@ Thumbs.db
 tmp/
 scratch/
 
+# Markdown files
+*.md
+
 # Large local archives and internal scratchpads
 *.zip
 PlotNeuralNet/
