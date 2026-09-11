@@ -1,0 +1,16 @@
+{
+  "feature_family": "srm_lite_highpass_residual_histograms_and_cooccurrences",
+  "classifier": "StandardScaler + LogisticRegression(class_weight=balanced)",
+  "split_protocol": "StratifiedGroupKFold; cover and stego from the same content-style pair stay in the same fold",
+  "pairs": 600,
+  "samples": 1200,
+  "feature_dim": 2040,
+  "folds": 5,
+  "accuracy_mean": 0.6991666666666667,
+  "balanced_accuracy_mean": 0.6991666666666667,
+  "roc_auc_mean": 0.7727916666666667,
+  "pooled_accuracy": 0.6991666666666667,
+  "pooled_balanced_accuracy": 0.6991666666666667,
+  "pooled_roc_auc": 0.7722444444444445,
+  "caveat": "This is an SRM-style compact high-pass feature set, not a full canonical SRM implementation."
+}

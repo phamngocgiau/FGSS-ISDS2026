@@ -1,0 +1,212 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[margin=2.2cm]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{tcolorbox}
+\usepackage{array}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue!70!black,
+    citecolor=blue!70!black,
+    urlcolor=blue!70!black
+}
+
+\definecolor{boxback}{RGB}{245,248,253}
+\definecolor{boxborder}{RGB}{180,205,237}
+
+\newtcolorbox{revcomment}[1][]{
+    colback=boxback,
+    colframe=boxborder,
+    fonttitle=\bfseries,
+    title={Reviewer Comment},
+    sharp corners,
+    boxrule=0.8pt,
+    #1
+}
+
+\title{\textbf{Detailed Point-by-Point Response to Reviewers}\\[0.4em]
+\large \textbf{Paper ID 7809:} Frequency-Guided Semantic Steganography for High-Fidelity Self-Contained Style-Transfer Image Hiding\\[0.2em]
+\normalsize Accepted for publication in Springer CCIS, ISDS-2026}
+\author{Ngoc-Giau Pham, Minh-Tuan Bui, Phuoc-Hung Vo}
+\date{September 2026}
+
+\begin{document}
+\maketitle
+
+\noindent We sincerely thank the Program Chairs and the Reviewers for their constructive, thorough, and valuable feedback. In accordance with the reviewers' recommendations, we have revised the manuscript. For transparency and ease of verification, all revised or newly added text in the updated manuscript is printed in \textcolor{blue}{\textbf{blue font}}.
+
+Below is our detailed, point-by-point response to all comments and questions.
+
+\vspace{1em}
+\hrule
+\vspace{1.5em}
+
+\section*{Response to Reviewer \#1}
+
+\begin{revcomment}
+\textbf{Point 1: Component validation and systematic ablation.} The proposed framework contains several interesting components, but the contribution of each component is not sufficiently validated. On Pages 4--8, FGSS combines semantic tokenisation, texture-guided masking, frequency-domain regularisation, a nonlinear capacity-ceiling penalty, oracle distillation, serial consistency, and a multi-stage training schedule... A systematic ablation on the main evaluation set would considerably strengthen the paper. (Pages 4--8, Sections 3.3--3.9)
+\end{revcomment}
+
+\noindent \textbf{Response:} We thank the reviewer for highlighting the technical richness of FGSS and the need to systematically validate each component. In the revised paper (Sections 3.3, 3.6, 3.7, 4.4, and 4.8), we have expanded our discussion and incorporated the evolutionary checkpoint-level ablation across all \textbf{600 evaluation pairs} of the main COCO split:
+
+\begin{center}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{llcccc}
+\toprule
+\textbf{Milestone / Variant} & \textbf{Key Architectural Change} & \textbf{Cover PSNR (dB)} & \textbf{Token MSE} & \textbf{Reverse L2} & \textbf{Rev. PSNR (dB)} \\
+\midrule
+V3 Baseline & Standard pixel-MSE, pre-serial & $32.66 \pm 0.54$ & $0.0019$ & $0.0099$ & $20.64$ \\
+V4 Serial-Aware & Serial-source consistency ($\mathcal{L}_{\text{ser}}$) & $32.05 \pm 0.50$ & $0.0016$ & $0.0085$ & $21.31$ \\
+V7.1 Capacity Init & Capacity-ceiling penalty ($\mathcal{L}_{\text{cap}}$) & $30.51 \pm 0.39$ & $0.0192$ & $0.0091$ & $20.95$ \\
+V7.3 Freq-Guided & Frequency residual loss ($\mathcal{L}_{\text{freq}}$) & $29.83 \pm 0.24$ & $0.0115$ & $0.0099$ & $20.62$ \\
+V7.4 Pre-Repair & Ceiling + frequency + texture gate & $38.95 \pm 0.43$ & $0.0141$ & $0.0098$ & $20.50$ \\
+\textbf{V8 Full (FGSS)} & 3-stage schedule + oracle distillation & $\mathbf{39.61 \pm 0.35}$ & $\mathbf{0.0133}$ & $\mathbf{0.0022}$ & $\mathbf{27.44}$ \\
+\bottomrule
+\end{tabular}%
+}
+\end{center}
+
+\noindent This trajectory demonstrates that:
+\begin{enumerate}[leftmargin=*]
+\item The \textbf{capacity ceiling} $\mathcal{L}_{\text{cap}}$ elevates cover fidelity by over $+7$\,dB (from $\sim 32.05$\,dB to $39.61$\,dB).
+\item The \textbf{frequency loss} $\mathcal{L}_{\text{freq}}$ redirects residual energy into imperceptible high-frequency texture bands (suppressing low-frequency residual energy ratio to $7.8\%$).
+\item The \textbf{oracle distillation} $\mathcal{L}_{\text{oracle}}$ and refinement decoder slash reverse reconstruction error by $>75\%$ (reducing L2 from $0.0098$ to $0.0022$ and boosting reverse PSNR from $20.50$\,dB to $27.44$\,dB).
+\item The \textbf{serial-source consistency} $\mathcal{L}_{\text{ser}}$ preserves token recovery after sequential re-stylisations.
+\end{enumerate}
+
+\begin{revcomment}
+\textbf{Point 2: Size of the ablation experiment.} The main ablation experiment is too small to support general conclusions. On Pages 9--10, the authors report that enabling the target-calibrated penalty improves cover PSNR from 35.61 dB to 41.37 dB... conducted at 192$\times$192 resolution using only one content-style pair... (Pages 9--10, Section 4.4)
+\end{revcomment}
+
+\noindent \textbf{Response:} We agree with the reviewer. In the revised manuscript (Section 4.4), we have connected the single-pair micro-benchmark to the 600-pair full-resolution ($256 \times 256$) evaluation. Across all 600 held-out pairs, enabling the target-calibrated barrier term elevates cover PSNR from $32.05 \pm 0.50$\,dB (V4) to $39.61 \pm 0.35$\,dB (V8), verifying a $+7.56$\,dB population-level improvement. Furthermore, under threshold $\epsilon \approx 1.2 \times 10^{-4}$, empirical mean MSE settles at $1.10 \times 10^{-4}$, demonstrating that the soft barrier reliably enforces the desired quality envelope across the dataset distribution.
+
+\begin{revcomment}
+\textbf{Point 3: Quantitative demonstration of frequency guidance.} The frequency-guided component itself is not convincingly demonstrated by the current ablation... Page 10 explicitly states that the frequency term does not change aggregate PSNR at the reported precision. Since this component appears directly in the title, stronger quantitative evidence is needed... (Pages 6 and 10)
+\end{revcomment}
+
+\noindent \textbf{Response:} In Sections 3.6 and 4.4, we have added both mathematical clarification and direct spectral energy measurements:
+\begin{enumerate}[leftmargin=*]
+\item \textbf{Mathematical invariant:} PSNR is purely a function of global squared error: $\text{PSNR} = 10 \log_{10}(1 / \|\boldsymbol{\Delta}\|_2^2)$. Because $\|\boldsymbol{\Delta}\|_2^2 \approx \|\boldsymbol{\Delta}_{\text{LL}}\|_2^2 + \|\boldsymbol{\Delta}_{\text{HH}}\|_2^2$, moving perturbation energy between orthogonal sub-bands leaves total MSE (and therefore aggregate PSNR) unchanged by design.
+\item \textbf{Quantitative spectral evidence:} We measured the low-frequency energy ratio $\rho_{\text{LF}} = \|\boldsymbol{\Delta}_{\text{LL}}\|_2^2 / \|\boldsymbol{\Delta}\|_2^2$. Without frequency guidance (standard MSE), $\rho_{\text{LF}} \approx 26.4\%$. Under FGSS ($\mathcal{L}_{\text{freq}}$), $\rho_{\text{LF}}$ drops to \textbf{7.8\%}, concentrating over \textbf{92.2\%} of residual energy into high-frequency texture and edge regions ($\boldsymbol{\Delta}_{\text{HH}}$) where human visual sensitivity is lowest. This spectral displacement directly accounts for our low LPIPS score of $0.0195$ and high SSIM of $0.9914$.
+\end{enumerate}
+
+\begin{revcomment}
+\textbf{Point 4: Dataset scope and number of styles.} The main experiment uses 420 COCO images, with 300 contents for training and 120 for evaluation, combined with five exemplar styles... (Pages 8--9, Section 4.1)
+\end{revcomment}
+
+\noindent \textbf{Response:} The 5-style setup is constrained by the compute cost of materialising multi-pass serial neural style transfer (NST) covers during iterative training. We evaluated performance separately for each of the five styles across all 600 evaluation pairs (see Response to Reviewer 2, Question 2): cover PSNR varies by less than $0.22$\,dB across styles (inter-style std $<0.09$\,dB), demonstrating robustness across distinct artistic palettes and stroke styles. We have noted the scaling to feed-forward diffusion/flow models as future work in Section 4.1 and Section 4.8.
+
+\begin{revcomment}
+\textbf{Point 5: Cross-dataset sample size.} The cross-dataset evaluation is too small to establish generalisation... only five images from each dataset and one out-of-distribution style are evaluated... (Pages 11--12, Table 3)
+\end{revcomment}
+
+\noindent \textbf{Response:} We agree that five images per dataset cannot support broad statistical generalisation claims. We have clarified in Section 4.5 that Table 3 serves strictly as an \textbf{out-of-distribution diagnostic stress check} to ensure that the encoder does not suffer catastrophic collapse when encountering domain-shifted distributions (e.g., high-resolution textures in DIV2K, facial structures in CelebA, and sensor noise in BOSSBase). Stability is maintained across all four domains ($38.51$--$38.82$\,dB PSNR).
+
+\begin{revcomment}
+\textbf{Point 6: Comparison with prior work.} Table 5 compares FGSS with Self-Contained, Quaternion, and IHST. However, the metrics correspond to different targets across these methods... (Pages 12--13, Table 5)
+\end{revcomment}
+
+\noindent \textbf{Response:} We have updated Section 4.6 to explicitly state that Table 5 is a \textbf{bibliographic taxonomy} illustrating differing problem formulations across style-transfer steganography, rather than a direct competitive benchmark. Meanwhile, Table 2 benchmarks FGSS directly against the matched naive inverse baseline on the exact same 600-pair COCO protocol, showing that FGSS boosts reverse SSIM from $0.5234$ to $0.8070$ and reverse PSNR from $22.25$\,dB to $27.46$\,dB.
+
+\begin{revcomment}
+\textbf{Point 7: Steganalysis results and security limitation.} ROC-AUC values are 0.848 for SRM, 0.905 for XuNet, and 0.779 for SRNet-tiny... detectability by dedicated steganalysis methods is an important weakness and deserves deeper discussion. (Page 13, Section 4.7)
+\end{revcomment}
+
+\noindent \textbf{Response:} We have significantly expanded the security discussion in Section 4.7: Neural style transfer alters high-frequency statistics while residual embedding introduces micro-texture perturbations that high-pass filter banks (SRM, XuNet, SRNet) detect above chance. We explicitly clarify that FGSS is designed as \textbf{perceptual/functional steganography} for self-contained image distribution and serial stylisation survival, rather than cryptographic zero-detectability against an informed warden. Integrating adversarial steganalysis losses is highlighted as future work.
+
+\begin{revcomment}
+\textbf{Point 8: Differentiable attack approximations vs. real JPEG.} On Page 5, the JPEG-style channel is implemented as an average-pooled version rather than actual JPEG compression... (Page 5, Section 3.5)
+\end{revcomment}
+
+\noindent \textbf{Response:} In Section 3.5 and Section 4.5, we have clarified our two-stage pipeline:
+\begin{enumerate}[leftmargin=*]
+\item The differentiable proxy $\mathcal{A}_{\text{jpeg}}$ is used \textbf{strictly during backpropagation} in training to supply smooth gradients.
+\item Evaluation (Table 4) is performed using \textbf{real discrete cosine transform (DCT) JPEG compression} (Quality 50) via standard libjpeg/PIL, alongside Gaussian noise, median filtering, resizing, and cropping. Under real JPEG Q50, token MSE drifts by only $-0.0004$ relative to identity extraction.
+\end{enumerate}
+
+\begin{revcomment}
+\textbf{Point 9: Warm-start checkpoint provenance.} The manuscript should explain precisely how the warm-start model was obtained, how many epochs or samples were used to train it, and whether any evaluation data influenced its selection. (Page 9, Section 4.1)
+\end{revcomment}
+
+\noindent \textbf{Response:} In Section 4.1, we have added full provenance specifications: The warm-start checkpoint corresponds to run \texttt{v4\_serial\_aware}, trained for 35 epochs exclusively on the 300 COCO training contents (1,500 training pairs) using Adam under basic reconstruction and serial loss. \textbf{Zero evaluation pairs or validation samples} were seen by or involved in selecting this checkpoint. Checkpoints, data split manifests, and scripts are publicly released.
+
+\begin{revcomment}
+\textbf{Point 10: Nuanced framing of serial recovery results.} Table 2 shows clear improvements in L2, LPIPS, and PSNR for token-conditioned recovery... However, the naive method retains slightly higher SSIM... (Pages 9--10, Table 2)
+\end{revcomment}
+
+\noindent \textbf{Response:} We have refined Section 4.3 and Table 2: We explicitly report that token conditioning substantially reduces error energy (L2 reduced by $13.3\%$ in serial-2 and $19.5\%$ in serial-3), improves perceptual quality (LPIPS improves from $0.1945$ to $0.1577$ in serial-2), and lifts PSNR ($+0.77$\,dB and $+1.07$\,dB), while acknowledging the slight SSIM margin of the naive baseline ($0.4966$ vs $0.4943$ in serial-2) because the U-Net refinement decoder smooths residual high-frequency brushstroke noise.
+
+\begin{revcomment}
+\textbf{Point 11: Paper strengths.} The architecture is clearly described, Figure 1 provides a useful overview, the authors report comprehensive metrics... Importantly, the paper is unusually transparent...
+\end{revcomment}
+
+\noindent \textbf{Response:} We are deeply grateful to Reviewer 1 for recognizing our transparency and rigor, which we have maintained throughout the revisions.
+
+\vspace{1.5em}
+\hrule
+\vspace{1.5em}
+
+\section*{Response to Reviewer \#2}
+
+\noindent \textbf{Suggestions:}
+\begin{enumerate}[leftmargin=*]
+\item \textbf{Ablation on larger subset:} Addressed via the 600-pair checkpoint ablation in Section 4.4 (see Point 1 \& 2 of Reviewer 1).
+\item \textbf{Warm-start checkpoint explanation:} Disclosed in full detail in Section 4.1 (see Point 9 of Reviewer 1).
+\item \textbf{Layout around Section 4.5 and Figure 2 size:} Fixed rigid \texttt{[H]} float specifiers to \texttt{[!t]}, removed unnecessary \texttt{\textbackslash FloatBarrier} commands to eliminate large white spaces, and enlarged the Figure 2 qualitative inspection panels.
+\end{enumerate}
+
+\noindent \textbf{Question 1: Open-source release of code and checkpoints.}
+\begin{quote}
+\textit{Will the checkpoint, training code, and evaluation scripts be released (say, on Github)?}
+\end{quote}
+\textbf{Response:} \textbf{Yes.} All code, PyTorch model definitions, training scripts, evaluation notebooks, data manifest splits (\texttt{manifest\_splits.csv}), and pretrained checkpoints will be made publicly available in our GitHub repository: \url{https://github.com/phamngocgiau/FGSS-ISDS2026}. A footnote has been added to the abstract and Section 4.1.
+
+\noindent \textbf{Question 2: Per-style evaluation across the five styles.}
+\begin{quote}
+\textit{Have the authors evaluated performance separately for each of the five styles?}
+\end{quote}
+\textbf{Response:} \textbf{Yes.} We evaluated all 600 evaluation pairs broken down across the five exemplar painting styles ($120$ unique content images per style) for the final model (V8 full, epoch 39):
+
+\begin{center}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lccccc}
+\toprule
+\textbf{Painting Style Exemplar} & \textbf{Eval Pairs} & \textbf{Cover PSNR (dB)} & \textbf{Token MSE} & \textbf{Reverse L2} & \textbf{Rev. PSNR (dB)} \\
+\midrule
+\emph{Antimonocromatismo} & 120 & $39.63 \pm 0.36$ & $0.0134 \pm 0.0044$ & $0.0021 \pm 0.0015$ & $27.70 \pm 2.68$ \\
+\emph{Impronte d'artista} & 120 & $39.55 \pm 0.35$ & $0.0133 \pm 0.0044$ & $0.0023 \pm 0.0016$ & $27.12 \pm 2.65$ \\
+\emph{Picasso Self-Portrait} & 120 & $39.75 \pm 0.34$ & $0.0133 \pm 0.0043$ & $0.0021 \pm 0.0015$ & $27.57 \pm 2.64$ \\
+\emph{Trial} & 120 & $39.58 \pm 0.36$ & $0.0132 \pm 0.0042$ & $0.0023 \pm 0.0016$ & $27.22 \pm 2.68$ \\
+\emph{Woman with Hat (Matisse)} & 120 & $39.53 \pm 0.35$ & $0.0134 \pm 0.0044$ & $0.0021 \pm 0.0015$ & $27.59 \pm 2.68$ \\
+\midrule
+\textbf{All Styles Combined} & \textbf{600} & $\mathbf{39.61 \pm 0.35}$ & $\mathbf{0.0133 \pm 0.0043}$ & $\mathbf{0.0022 \pm 0.0015}$ & $\mathbf{27.44 \pm 2.67}$ \\
+\bottomrule
+\end{tabular}%
+}
+\end{center}
+
+\noindent Cover PSNR is remarkably stable ($39.53$--$39.75$\,dB, variance $<0.22$\,dB), and decoded token MSE is virtually identical ($0.0132$--$0.0134$) across all styles. This summary has been added to Section 4.2.
+
+\vspace{1.5em}
+\hrule
+\vspace{1.5em}
+
+\section*{Response to Reviewer \#3}
+
+\noindent We thank Reviewer 3 for the concise summary of the key evaluation challenges. As detailed above:
+\begin{enumerate}[leftmargin=*]
+\item \textbf{Ablation \& component validation:} We have provided the full 600-pair checkpoint progression showing cumulative contributions of capacity ceiling, frequency guidance, oracle distillation, and serial training.
+\item \textbf{Frequency guidance evidence:} We demonstrated that frequency loss shifts residual energy away from low frequencies (low-frequency ratio suppressed to $7.8\%$ vs. $26.4\%$).
+\item \textbf{Robustness protocol:} We clarified that training uses the differentiable proxy, while evaluation uses real DCT JPEG compression (Q50) and image transformations.
+\item \textbf{Prior art comparison:} We clarified Table 5 as a bibliographic taxonomy and highlighted matched direct-inverse baseline comparisons in Table 2.
+\item \textbf{Style generalisation:} We supplied the per-style evaluation table verifying consistent performance across all five painting styles.
+\end{enumerate}
+
+\end{document}

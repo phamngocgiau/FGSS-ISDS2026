@@ -1,0 +1,15 @@
+{
+  "image_size": 192,
+  "cover_psnr_db": 39.39554053993949,
+  "cover_ssim": 0.9992344975471497,
+  "cover_l2": 0.00011493331840028986,
+  "token_mse_clean": 0.015226287767291069,
+  "token_mse_jpeg": 0.01619410701096058,
+  "token_mse_rbn": 0.01638721488416195,
+  "nst_time_sec": 43.824,
+  "stego_train_time_sec": 15.708,
+  "encoder_inference_sec": 0.069,
+  "decoder_inference_sec": 0.0051,
+  "trainable_params": 228435,
+  "device": "cpu"
+}

@@ -1,0 +1,31 @@
+{
+  "payload_description": "lossy semantic token plus 32x32 thumbnail, not a raw message bitstream",
+  "token_shape": [
+    64,
+    32,
+    32
+  ],
+  "thumbnail_shape": [
+    3,
+    32,
+    32
+  ],
+  "latent_values": 68608,
+  "carrier_size": [
+    3,
+    256,
+    256
+  ],
+  "carrier_pixels": 65536,
+  "fp32_bits": 2195456,
+  "fp32_bpp": 33.5,
+  "fp16_bits": 1097728,
+  "fp16_bpp": 16.75,
+  "uint8_bits": 548864,
+  "uint8_bpp": 8.375,
+  "notes": [
+    "These bpp values describe latent serialization size only.",
+    "They are not guaranteed lossless payload capacity.",
+    "The receiver needs the trained checkpoint and decoding code."
+  ]
+}

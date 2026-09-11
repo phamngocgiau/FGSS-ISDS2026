@@ -1,0 +1,16 @@
+{
+  "feature_family": "sealwatch_full_spatial_rich_model_srm",
+  "feature_dim": 34671,
+  "classifier": "StandardScaler + LogisticRegression(class_weight=balanced, solver=saga)",
+  "split_protocol": "StratifiedGroupKFold; cover and stego from the same content-style pair stay in the same fold",
+  "pairs": 600,
+  "samples": 1200,
+  "folds": 5,
+  "accuracy_mean": 0.7675,
+  "balanced_accuracy_mean": 0.7675,
+  "roc_auc_mean": 0.8489861111111111,
+  "pooled_accuracy": 0.7675,
+  "pooled_balanced_accuracy": 0.7675000000000001,
+  "pooled_roc_auc": 0.8480027777777778,
+  "implementation": "sealwatch.srm.extract"
+}

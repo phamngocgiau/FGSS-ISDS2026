@@ -1,0 +1,39 @@
+{
+  "experiment": "neural_steganalysis_lightweight",
+  "note": "Local XuNet-lite/SRNet-tiny probes, not official pretrained XuNet/SRNet.",
+  "pairs": 600,
+  "samples": 1200,
+  "image_size": 256,
+  "folds": 5,
+  "epochs": 20,
+  "device": "cuda",
+  "gpu": "NVIDIA GeForce RTX 5070 Ti",
+  "detectors": [
+    {
+      "model": "xunet_lite",
+      "params": 394946,
+      "folds": 5,
+      "epochs": 20,
+      "accuracy_mean": 0.7825,
+      "balanced_accuracy_mean": 0.7825,
+      "roc_auc_mean": 0.9175555555555555,
+      "pooled_accuracy": 0.7825,
+      "pooled_balanced_accuracy": 0.7825,
+      "pooled_roc_auc": 0.9052527777777777,
+      "train_sec_total": 103.92101759999059
+    },
+    {
+      "model": "srnet_tiny",
+      "params": 3011394,
+      "folds": 5,
+      "epochs": 20,
+      "accuracy_mean": 0.7083333333333333,
+      "balanced_accuracy_mean": 0.7083333333333333,
+      "roc_auc_mean": 0.8193194444444444,
+      "pooled_accuracy": 0.7083333333333334,
+      "pooled_balanced_accuracy": 0.7083333333333334,
+      "pooled_roc_auc": 0.7792027777777778,
+      "train_sec_total": 371.878229999973
+    }
+  ]
+}

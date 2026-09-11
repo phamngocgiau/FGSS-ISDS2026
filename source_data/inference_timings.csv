@@ -1,0 +1,5 @@
+stage,seconds,note
+NST optimization (120 steps),43.824,Single content/style pair @ 192x192 on CPU
+Stego encoder forward,0.0690,Conditional residual @ 192x192
+Stego decoder forward,0.0051,Token recovery @ 192x192
+End-to-end (train 60 epochs),15.708,Single batch loop on CPU

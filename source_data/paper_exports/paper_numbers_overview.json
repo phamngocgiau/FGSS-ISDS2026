@@ -1,0 +1,25 @@
+{
+  "run_name": "colab_style_stego_paper_repair_v8_coco_full",
+  "cover": [
+    {
+      "quantity": "Cover distortion",
+      "L2": "0.0001 +/- 0.0000",
+      "SSIM": "0.9914 +/- 0.0030",
+      "LPIPS": "0.0195 +/- 0.0081",
+      "PSNR": "39.6074 +/- 0.3532",
+      "Clean token MSE": "0.0133 +/- 0.0043",
+      "Robust token MSE": "0.0133 +/- 0.0045",
+      "JPEG token MSE": "0.0132 +/- 0.0044"
+    }
+  ],
+  "reverse_best_l2": "token_reverse_oracle",
+  "reverse_best_ssim": "token_reverse_oracle",
+  "reverse_best_lpips": "token_reverse_oracle",
+  "serial2_best_l2": "token_serial2_clean",
+  "serial2_best_ssim": "naive_serial2",
+  "serial2_best_lpips": "token_serial2_clean",
+  "serial3_best_l2": "token_serial3_clean",
+  "serial3_best_ssim": "naive_serial3",
+  "serial3_best_lpips": "token_serial3_clean",
+  "n_eval_pairs": 600
+}
