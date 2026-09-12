@@ -19,6 +19,7 @@
 # Internal review, rebuttal, and submission workflows
 Review_and_Submission/
 Compiled_PDFs/
+EasyChair_Submission/
 build_isds2026.bat
 check_submission.ps1
 shrink_assets.py
