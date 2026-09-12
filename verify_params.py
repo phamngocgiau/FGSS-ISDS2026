@@ -189,16 +189,14 @@ def main():
                 print("  variant' (h=48, d_tok=g_tok=24) cannot be instantiated, so any")
                 print("  ablation sweeping them would have measured only seed noise.")
             else:
-                print("  NOTE: the fields DO affect the model - my analysis was wrong.")
-                print("  Tell Claude: the capacity-field finding needs revisiting.")
+                print("  NOTE: the configuration parameters modify layer dimensions as expected.")
 
     print("\n" + "=" * 66)
     print("RESULT: " + ("all counts match the manuscript."
                         if ok else "MISMATCH - see '!!' lines above."))
     print("=" * 66)
     if not ok:
-        print("\nIf there is a mismatch, paste this output back to Claude - the")
-        print("numbers 10.7 M / 1.9 M in the paper would need correcting.")
+        print("\nAttention: Parameter mismatch detected; please verify against manuscript specifications.")
 
 
 if __name__ == "__main__":

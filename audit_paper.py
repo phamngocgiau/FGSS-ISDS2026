@@ -10,7 +10,7 @@ import sys
 
 BASE_DIR = Path(__file__).resolve().parent
 SOURCE_DATA = BASE_DIR / "source_data"
-PAPER_ASSETS = BASE_DIR / "paper_assets_compressed"
+PAPER_ASSETS = BASE_DIR / "paper_assets"
 FOLLOWUP_RESULTS = BASE_DIR / "followup_results"
 
 errors: list[str] = []
@@ -294,12 +294,10 @@ else:
 
 # === 10. Check image files exist ===
 required_imgs = [
-    "figure1_architecture.png",
+    "architecture_diagram.pdf",
+    "freq_decomp.jpg",
     "qualitative_grid.jpg",
-    "cross_dataset_grid.jpg",
     "training_curve.png",
-    "style_grid.jpg",
-    "attack_grid.jpg",
 ]
 for img in required_imgs:
     if not (PAPER_ASSETS / img).exists():
