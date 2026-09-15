@@ -43,6 +43,9 @@ Evaluated across **600 held-out evaluation pairs** from MS-COCO val2017:
 
 ```text
 FGSS-ISDS2026/
+├── checkpoints/                 # Pretrained model weights and loading guide
+│   ├── benchmark_model_best.pt  # Official FGSS model weights (Epoch 39, 10.68M params)
+│   └── README.md                # Checkpoint metadata, hashes, and loading snippet
 ├── paper_assets/                # Visual figures, curves, and evaluation grids
 │   ├── architecture_diagram.png # Full modular system pipeline
 │   ├── freq_decomp.jpg          # Haar wavelet frequency residual decomposition
@@ -53,39 +56,14 @@ FGSS-ISDS2026/
 │   ├── run_summary.json         # Checkpoint logs, hyperparameters, and split info
 │   ├── ablation.csv             # Single-pair and multi-epoch loss component sweep
 │   ├── robustness_metrics.csv   # Per-attack distortion evaluation metrics
-│   ├── model_definition.py      # Layer-by-layer architectural module definitions
-│   └── training_protocol.py     # Optimizer, loss weights, and phase scheduling
 ├── followup_results/            # Extended benchmark runs and steganalysis audits
 │   ├── checkpoint_ablation_600_summary.json # 600-pair evolutionary checkpoint audit
 │   ├── full_srm_steganalysis_summary.json   # 34,671-feature Spatial Rich Model probe
 │   ├── neural_steganalysis_summary.json     # Xu-Net and SRNet detection ROC-AUC
 │   └── gpu_runtime_256_summary.json         # Module-wise latency benchmarks
-├── audit_paper.py               # Comprehensive verification script (169 audit checks)
-├── verify_params.py             # Analytic parameter-count verification script
-├── plot_fgss.py                 # Plotting utility for curves and figures
 ├── LICENSE                      # MIT License
 └── README.md                    # Repository documentation
 ```
-
----
-
-## 🔍 Verification & Reproducibility
-
-The repository includes standalone validation tools that programmatically cross-verify all numbers reported in the paper directly against raw benchmark logs:
-
-### 1. Verify Parameter Counts
-Analyzes the exact tensor shapes and layer dimensions of all four sub-networks:
-```bash
-python verify_params.py
-```
-*Expected output: 10,677,395 total trainable parameters; 1,921,609 embedding path parameters.*
-
-### 2. Run Comprehensive Paper Audit
-Verifies 169 numeric data points (Table 1, Table 2, Table 3, Table 4, Table 5, Table 6, and all in-text citations):
-```bash
-python audit_paper.py
-```
-*Expected output: `ALL NUMBERS VERIFIED - 0 ERRORS` across 169 verification points.*
 
 ---
 
